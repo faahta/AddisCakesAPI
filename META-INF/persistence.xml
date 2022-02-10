@@ -8,6 +8,9 @@
     <class>et.addis.home_cakes.orders.model.Users</class>
     <class>et.addis.home_cakes.orders.model.UserRoles</class>
     <class>et.addis.home_cakes.orders.model.ERole</class>
+    <class>et.addis.home_cakes.orders.model.Pastry</class>
+    <class>et.addis.home_cakes.orders.model.SubCity</class>
+    <class>et.addis.home_cakes.orders.model.Bank</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/home_cakes" />

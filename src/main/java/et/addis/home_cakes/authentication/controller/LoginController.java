@@ -7,20 +7,16 @@ import et.addis.home_cakes.orders.services.UserService;
 import et.addis.home_cakes.security.CustomUserDetailsService;
 import et.addis.home_cakes.security.TokenProvider;
 import et.addis.home_cakes.security.UserPrincipal;
+import io.swagger.annotations.ApiOperation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.thymeleaf.TemplateEngine;
 
 import java.util.List;
@@ -30,7 +26,7 @@ import java.util.stream.Collectors;
  * Created by Fassil on 08/01/22.
  */
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping(value = "/v1/api")
 public class LoginController {
 
     final AuthenticationManager authenticationManager;
@@ -59,6 +55,7 @@ public class LoginController {
     }
 
     @PostMapping(value = "/v1/authenticate", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Authenticate user with oauth2", response = JwtResponse.class)
     public ResponseEntity<?> login(@RequestBody JwtRequest jwtRequest) throws Exception {
         // authenticate(jwtRequest.getEmail(), jwtRequest.getPassword());
         logger.info("Received login request: POST "+jwtRequest.getEmail()+", "+jwtRequest.getPassword());

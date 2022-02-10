@@ -3,13 +3,18 @@ package et.addis.home_cakes.orders.services.impl;
 import et.addis.home_cakes.integration.response.ExecResult;
 import et.addis.home_cakes.orders.dao.PastryDAO;
 import et.addis.home_cakes.orders.dto.PastryDto;
+import et.addis.home_cakes.orders.dto.SubCityDto;
 import et.addis.home_cakes.orders.mapper.PastryMapper;
+import et.addis.home_cakes.orders.mapper.SubCityMapper;
 import et.addis.home_cakes.orders.model.Pastry;
+import et.addis.home_cakes.orders.model.SubCity;
 import et.addis.home_cakes.orders.services.PastryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by Fassil on 26/01/22.
@@ -46,6 +51,21 @@ public class PastryServiceImpl implements PastryService {
             ExecResult result = pastryDAO.savePastry(pastry);
             LOG.info(pfn + " END");
             return result;
+        } catch (Exception e){
+            LOG.info(pfn + " END");
+            LOG.error(pfn + " "+ e.getMessage());
+            throw e;
+        }
+    }
+
+    @Override
+    public List<SubCityDto> getAllSubCities() {
+        String pfn = "[PastryServiceImpl::getAllSubCities]";
+        LOG.info(pfn + " START");
+        try {
+            List<SubCity> subCities = pastryDAO.findAllSubCities();
+            LOG.info(pfn + " END");
+            return SubCityMapper.INSTANCE.modelsToDtos(subCities);
         } catch (Exception e){
             LOG.info(pfn + " END");
             LOG.error(pfn + " "+ e.getMessage());

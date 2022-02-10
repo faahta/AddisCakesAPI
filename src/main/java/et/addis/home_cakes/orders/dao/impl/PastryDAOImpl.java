@@ -4,6 +4,7 @@ import et.addis.home_cakes.integration.response.ExecResult;
 import et.addis.home_cakes.orders.dao.PastryDAO;
 import et.addis.home_cakes.orders.dto.PastryDto;
 import et.addis.home_cakes.orders.model.Pastry;
+import et.addis.home_cakes.orders.model.SubCity;
 import et.addis.home_cakes.util.ErrorConstants;
 import et.addis.home_cakes.util.MessageConstants;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by Fassil on 27/01/22.
@@ -65,6 +67,23 @@ public class PastryDAOImpl implements PastryDAO {
             res.setMsg(ErrorConstants.ERR_SAVE);
             LOG.info(pfn + " END");
             return res;
+        }
+    }
+
+    @Override
+    @Transactional
+    public List<SubCity> findAllSubCities() {
+        String pfn = "[PastryDAOImpl::findPastryByName]";
+        LOG.info(pfn + " BEGIN");
+        try {
+            Query query = entityManager.createQuery("select sc from SubCity sc");
+            List<SubCity> subCities = query.getResultList();
+            LOG.info(pfn + " END");
+            return subCities;
+        } catch (Exception e){
+            LOG.error(pfn + " "+ e.getMessage());
+            LOG.info(pfn + " END");
+            throw e;
         }
     }
 }

@@ -1,20 +1,21 @@
 package et.addis.home_cakes.orders.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 import org.n52.jackson.datatype.jts.GeometryDeserializer;
 import org.n52.jackson.datatype.jts.GeometrySerializer;
 import org.springframework.data.geo.Point;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Fassil on 26/01/22.
@@ -27,10 +28,11 @@ import java.io.Serializable;
 @Table(name = "pastry")
 public class Pastry  implements Serializable {
     @Id
-    @Column(name = "pastry_id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "pastry_id")
+    private Long pastryId;
 
-    @Column(name="name")
+    @Column(name="name", nullable = false)
     private String name;
 
     @Column(name="email")
@@ -45,24 +47,61 @@ public class Pastry  implements Serializable {
     @Column(name="description")
     private String description;
 
-    @Column(name="min_price")
+    @Column(name="min_price", nullable = false)
     private Double minPrice;
 
-    @Column(name="max_price")
-    private String maxPrice;
+    @Column(name="max_price", nullable = false)
+    private Double maxPrice;
 
-    @Column(name="tin_number")
+    @Column(name="tin_number", nullable = false)
     private Long tinNumber;
 
-    @Column(name="bank_acct_no")
+    @ManyToOne
+    @JoinColumn(name = "bank_id", referencedColumnName = "bank_id")
+    private Bank bank;
+
+    @Column(name="bank_acct_no", nullable = false)
     private String bankAcctNo;
+    @Column(name="bank_acct_owner", nullable = false)
+    private String bankAcctOwner;
 
-    @Column(name="image_url")
-    private String imageUrl;
+    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
+    @Column(name= "logo_image")
+    private byte[] logoImage;
 
-    @Column(name = "geom")
-    @JsonSerialize(using = GeometrySerializer.class)
+
+  /*  @JsonSerialize(using = GeometrySerializer.class)
     @JsonDeserialize(using = GeometryDeserializer.class)
-    private Point geom;
+    @JsonIgnore
+    private Point geom;*/
 
+    @ManyToOne
+   // @JoinColumn(name = "sub_city_id", referencedColumnName = "id")
+    private SubCity subCity;
+
+    @Column(name="woreda", nullable = false)
+    private String woreda;
+
+    @Column(name="kebele")
+    private String kebele;
+
+    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
+    @Column(name="image1")
+    private byte[] image1;
+    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
+    @Column(name="image2")
+    private byte[] image2;
+    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
+    @Column(name="image3")
+    private byte[] image3;
+
+
+
+    @OneToMany(mappedBy="pastry")
+    //@JsonIgnore
+    private List<PastryBranches> branches = new ArrayList<>();
 }
