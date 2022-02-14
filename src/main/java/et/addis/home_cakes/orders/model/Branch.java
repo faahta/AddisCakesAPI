@@ -6,9 +6,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+
 import org.n52.jackson.datatype.jts.GeometryDeserializer;
 import org.n52.jackson.datatype.jts.GeometrySerializer;
-import org.postgis.Point;
+import org.locationtech.jts.geom.*;
 
 import javax.persistence.*;
 
@@ -25,7 +27,7 @@ public class Branch {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "branch_id")
-    private Integer id;
+    private Integer branchId;
 
     @Column(name = "branch_name")
     private String branchName;
@@ -38,5 +40,7 @@ public class Branch {
     @Column(name = "phone_no")
     private String phoneNo;
 
+    private Double latitude;
+    private Double longitude;
 
 }

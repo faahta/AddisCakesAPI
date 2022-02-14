@@ -1,5 +1,6 @@
 package et.addis.home_cakes.orders.controller;
 
+import et.addis.home_cakes.integration.request.SavePastryRequest;
 import et.addis.home_cakes.integration.response.ExecResult;
 import et.addis.home_cakes.orders.dto.PastryDto;
 import et.addis.home_cakes.orders.dto.SubCityDto;
@@ -45,11 +46,11 @@ public class PastryController {
 
     @PostMapping(value = "/pastry", consumes = MediaType.APPLICATION_JSON_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "Saves a pastry.", response = ExecResult.class)
-    public ResponseEntity<ExecResult> savePastry(@RequestBody PastryDto pastry) throws Exception {
+    public ResponseEntity<ExecResult> savePastry(@RequestBody SavePastryRequest savePastryRequest) throws Exception {
         String pfn = "[PastryController::savePastry]";
-        LOG.info(pfn + " Received request - POST /api/pastry : "+pastry.toString());
+        LOG.info(pfn + " Received request - POST /api/pastry : "+savePastryRequest.getPastry().toString());
         try {
-            ExecResult result = pastryService.savePastry(pastry);
+            ExecResult result = pastryService.savePastry(savePastryRequest.getPastry(), savePastryRequest.getBranches());
             LOG.info(pfn + " END");
             return ResponseEntity.ok().body(result);
         } catch (Exception e){

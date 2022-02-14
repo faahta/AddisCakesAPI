@@ -99,7 +99,8 @@ public class Pastry  implements Serializable {
     @Column(name="image3")
     private byte[] image3;
 
-
+    @Column(name="has_branch")
+    private Boolean hasBranch;
 
     @OneToMany(mappedBy="pastry")
     //@JsonIgnore

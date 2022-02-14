@@ -2,17 +2,20 @@ package et.addis.home_cakes.orders.services.impl;
 
 import et.addis.home_cakes.integration.response.ExecResult;
 import et.addis.home_cakes.orders.dao.PastryDAO;
+import et.addis.home_cakes.orders.dto.BranchDto;
 import et.addis.home_cakes.orders.dto.PastryDto;
 import et.addis.home_cakes.orders.dto.SubCityDto;
+import et.addis.home_cakes.orders.mapper.BranchMapper;
 import et.addis.home_cakes.orders.mapper.PastryMapper;
 import et.addis.home_cakes.orders.mapper.SubCityMapper;
+import et.addis.home_cakes.orders.model.Branch;
 import et.addis.home_cakes.orders.model.Pastry;
 import et.addis.home_cakes.orders.model.SubCity;
-import et.addis.home_cakes.orders.services.PastryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import et.addis.home_cakes.orders.services.PastryService;
 
 import java.util.List;
 
@@ -43,12 +46,13 @@ public class PastryServiceImpl implements PastryService {
     }
 
     @Override
-    public ExecResult savePastry(PastryDto pastryDto) {
+    public ExecResult savePastry(PastryDto pastryDto, List<BranchDto> branchesDtos) {
         String pfn = "[PastryServiceImpl::savePastry]";
         LOG.info(pfn + " START");
         try {
             Pastry pastry = PastryMapper.INSTANCE.dtoToModel(pastryDto);
-            ExecResult result = pastryDAO.savePastry(pastry);
+            List<Branch> branches = BranchMapper.INSTANCE.dtosToModels(branchesDtos);
+            ExecResult result = pastryDAO.savePastry(pastry, branches);
             LOG.info(pfn + " END");
             return result;
         } catch (Exception e){

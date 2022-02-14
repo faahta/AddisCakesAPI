@@ -1,6 +1,7 @@
 package et.addis.home_cakes.orders.services;
 
 import et.addis.home_cakes.integration.response.ExecResult;
+import et.addis.home_cakes.orders.dto.BranchDto;
 import et.addis.home_cakes.orders.dto.PastryDto;
 import et.addis.home_cakes.orders.dto.SubCityDto;
 
@@ -12,7 +13,7 @@ import java.util.List;
 public interface PastryService {
     PastryDto getPastryByName(String name);
 
-    ExecResult savePastry(PastryDto pastry);
+    ExecResult savePastry(PastryDto pastryDto, List<BranchDto> branches);
 
     List<SubCityDto> getAllSubCities();
 }

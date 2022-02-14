@@ -61,5 +61,6 @@ public class PastryDto implements Serializable  {
     private String image2;
     private String image3;
 
-    private List<PastryBranchesDto> branches;
+    private Boolean hasBranch;
+ /*   private List<BranchDto> branches;*/
 }

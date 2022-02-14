@@ -31,4 +31,8 @@ public class PastryBranches {
     private Branch branch;
 
 
+    public PastryBranches(Pastry pastry, Branch b) {
+        this.pastry = pastry;
+        this.branch = b;
+    }
 }

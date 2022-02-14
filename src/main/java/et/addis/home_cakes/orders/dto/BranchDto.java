@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.postgis.Point;
+import org.locationtech.jts.geom.*;
 
 import java.io.Serializable;
 
@@ -16,8 +16,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BranchDto implements Serializable  {
-    private Integer id;
+    private Integer branchId;
     private String branchName;
     private Point location;
     private String phoneNo;
+    private Double latitude;
+    private Double longitude;
 }
