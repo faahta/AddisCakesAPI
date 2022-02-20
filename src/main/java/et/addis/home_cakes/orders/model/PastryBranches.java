@@ -6,7 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+///////JPA/////////
+// OneToMany: LAZY
+// ManyToOne: EAGER
+// ManyToMany: LAZY
+// OneToOne: EAGER
 
+///////HIBERNATE/////////
+//ALL LAZY
 /**
  * Created by Fassil on 10/02/22.
  */
@@ -22,11 +29,11 @@ public class PastryBranches {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "pastry_id")
     private Pastry pastry;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "branch_id")
     private Branch branch;
 

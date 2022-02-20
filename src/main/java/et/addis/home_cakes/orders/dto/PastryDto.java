@@ -1,18 +1,13 @@
 package et.addis.home_cakes.orders.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import et.addis.home_cakes.orders.model.Bank;
-import et.addis.home_cakes.orders.model.Branch;
-import et.addis.home_cakes.orders.model.PastryBranches;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.geo.Point;
+import org.locationtech.jts.geom.Point;
 import org.springframework.lang.NonNull;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by Fassil on 26/01/22.
@@ -62,5 +57,6 @@ public class PastryDto implements Serializable  {
     private String image3;
 
     private Boolean hasBranch;
+   // private Point location;
  /*   private List<BranchDto> branches;*/
 }

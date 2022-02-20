@@ -39,6 +39,7 @@ public interface PastryMapper {
 
     @Named(value = "stringToBytes")
     default byte[] map(String logoImage) throws UnsupportedEncodingException {
+        if(logoImage == null) return null;
         try  {
             byte[] logo = Base64.getEncoder().encode(logoImage.getBytes());
             byte[] decodedImage = Base64.getDecoder().decode(new String(logo).getBytes("UTF-8"));
@@ -51,6 +52,7 @@ public interface PastryMapper {
 
     @Named(value = "bytesToString")
     default String map(byte[] logoImage)  {
+        if(logoImage == null) return null;
         return new String(logoImage);
     }
 

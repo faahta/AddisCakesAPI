@@ -50,10 +50,12 @@ public class PastryController {
         String pfn = "[PastryController::savePastry]";
         LOG.info(pfn + " Received request - POST /api/pastry : "+savePastryRequest.getPastry().toString());
         try {
-            ExecResult result = pastryService.savePastry(savePastryRequest.getPastry(), savePastryRequest.getBranches());
+            ExecResult result = pastryService.savePastry(savePastryRequest.getPastry(),
+                    savePastryRequest.getBranches(), savePastryRequest.getLatitude(), savePastryRequest.getLongitude(),
+                    savePastryRequest.getBusinessHoursDto());
             LOG.info(pfn + " END");
             return ResponseEntity.ok().body(result);
-        } catch (Exception e){
+        } catch (Exception e) {
             LOG.info(pfn + " END");
             LOG.error(pfn + " "+ e.getMessage());
             throw e;

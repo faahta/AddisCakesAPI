@@ -1,16 +1,10 @@
 package et.addis.home_cakes.orders.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
-import org.n52.jackson.datatype.jts.GeometryDeserializer;
-import org.n52.jackson.datatype.jts.GeometrySerializer;
-import org.springframework.data.geo.Point;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,7 +24,7 @@ public class Pastry  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "pastry_id")
-    private Long pastryId;
+    private Integer pastryId;
 
     @Column(name="name", nullable = false)
     private String name;
@@ -70,12 +64,6 @@ public class Pastry  implements Serializable {
     @Column(name= "logo_image")
     private byte[] logoImage;
 
-
-  /*  @JsonSerialize(using = GeometrySerializer.class)
-    @JsonDeserialize(using = GeometryDeserializer.class)
-    @JsonIgnore
-    private Point geom;*/
-
     @ManyToOne
    // @JoinColumn(name = "sub_city_id", referencedColumnName = "id")
     private SubCity subCity;
@@ -105,4 +93,7 @@ public class Pastry  implements Serializable {
     @OneToMany(mappedBy="pastry")
     //@JsonIgnore
     private List<PastryBranches> branches = new ArrayList<>();
+
+    /*@Column(name = "location")
+    private Point location;*/ //Only if the pastry does not have branches
 }
