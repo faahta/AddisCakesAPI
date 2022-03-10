@@ -39,7 +39,7 @@ import java.util.Collections;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity( securedEnabled = true, jsr250Enabled = true,  prePostEnabled = true)
-@EnableOAuth2Client
+//@EnableOAuth2Client
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -119,6 +119,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 new DefaultAuthorizationCodeTokenResponseClient();
         accessTokenResponseClient.setRequestEntityConverter(new CustomRequestEntityConverter());
         return accessTokenResponseClient;
+    }
+
+    @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(ImmutableList.of("*"));
+        configuration.setAllowedMethods(ImmutableList.of("HEAD", "GET", "POST", "PUT", "DELETE", "PATCH"));
+        configuration.setAllowedHeaders(ImmutableList.of("Authorization", "Cache-Control", "Content-Type"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+
+    @Bean
+    public FilterRegistrationBean someFilterRegistration() {
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new LogFilter());
+        registration.addUrlPatterns("/*");
+        registration.setOrder(RegistrationBean.HIGHEST_PRECEDENCE); //Must has higher precedence than FilterChainProxy
+        return registration;
     }
 
 //    @Bean

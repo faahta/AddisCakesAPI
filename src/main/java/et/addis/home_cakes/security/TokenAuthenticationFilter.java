@@ -1,6 +1,6 @@
 package et.addis.home_cakes.security;
 
-import et.addis.home_cakes.orders.model.Users;
+import et.addis.home_cakes.pastries.model.Users;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

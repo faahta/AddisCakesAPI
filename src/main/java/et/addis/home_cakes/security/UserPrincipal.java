@@ -1,7 +1,7 @@
 package et.addis.home_cakes.security;
 
-import et.addis.home_cakes.orders.model.UserRoles;
-import et.addis.home_cakes.orders.model.Users;
+import et.addis.home_cakes.pastries.model.UserRoles;
+import et.addis.home_cakes.pastries.model.Users;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -58,8 +58,8 @@ public class UserPrincipal implements OAuth2User, UserDetails {
                 user.getFullName(),
                 user.getEmail(),
                 user.getPassword(),
-                user.getPhoneNumber(),
-                user.getDateOfBirth().toString(),
+                String.valueOf(user.getPhoneNumber()),
+                String.valueOf(user.getDateOfBirth()),
                 authorities
         );
     }

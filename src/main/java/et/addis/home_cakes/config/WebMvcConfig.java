@@ -1,12 +1,15 @@
+/*
 package et.addis.home_cakes.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+*/
 /**
  * Created by Fassil on 14/09/20.
- */
+ *//*
+
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Override
@@ -19,3 +22,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .maxAge(3600);
     }
 }
+*/

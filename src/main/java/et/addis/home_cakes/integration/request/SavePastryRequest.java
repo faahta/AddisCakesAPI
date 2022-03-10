@@ -1,8 +1,8 @@
 package et.addis.home_cakes.integration.request;
 
-import et.addis.home_cakes.orders.dto.BranchDto;
-import et.addis.home_cakes.orders.dto.BusinessHoursDto;
-import et.addis.home_cakes.orders.dto.PastryDto;
+import et.addis.home_cakes.pastries.dto.BranchDto;
+import et.addis.home_cakes.pastries.dto.BusinessHoursDto;
+import et.addis.home_cakes.pastries.dto.PastryDto;
 import lombok.*;
 
 import java.io.Serializable;

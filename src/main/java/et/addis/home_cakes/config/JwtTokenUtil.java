@@ -1,8 +1,8 @@
 package et.addis.home_cakes.config;
 
 
-import et.addis.home_cakes.orders.model.UserSocial;
-import et.addis.home_cakes.orders.model.Users;
+import et.addis.home_cakes.pastries.model.UserSocial;
+import et.addis.home_cakes.pastries.model.Users;
 import io.jsonwebtoken.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

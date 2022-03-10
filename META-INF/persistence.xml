@@ -4,13 +4,13 @@
              xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd"
              version="3.0">
   <persistence-unit name="addis.homecakes.persistence" transaction-type="RESOURCE_LOCAL">
-    <class>et.addis.home_cakes.orders.model.Role</class>
-    <class>et.addis.home_cakes.orders.model.Users</class>
-    <class>et.addis.home_cakes.orders.model.UserRoles</class>
-    <class>et.addis.home_cakes.orders.model.ERole</class>
-    <class>et.addis.home_cakes.orders.model.Pastry</class>
-    <class>et.addis.home_cakes.orders.model.SubCity</class>
-    <class>et.addis.home_cakes.orders.model.Bank</class>
+    <class>et.addis.home_cakes.pastries.model.Role</class>
+    <class>et.addis.home_cakes.pastries.model.Users</class>
+    <class>et.addis.home_cakes.pastries.model.UserRoles</class>
+    <class>et.addis.home_cakes.pastries.model.ERole</class>
+    <class>et.addis.home_cakes.pastries.model.Pastry</class>
+    <class>et.addis.home_cakes.pastries.model.SubCity</class>
+    <class>et.addis.home_cakes.pastries.model.Bank</class>
     <properties>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/home_cakes" />

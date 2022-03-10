@@ -1,7 +1,7 @@
 package et.addis.home_cakes.security.oauth2;
 
-import et.addis.home_cakes.orders.dao.UsersDAO;
-import et.addis.home_cakes.orders.model.Users;
+import et.addis.home_cakes.authentication.repository.UserDAO;
+import et.addis.home_cakes.pastries.model.Users;
 import et.addis.home_cakes.security.AuthProvider;
 import et.addis.home_cakes.security.UserPrincipal;
 import et.addis.home_cakes.security.oauth2.user.OAuth2UserInfo;
@@ -10,7 +10,6 @@ import et.addis.home_cakes.util.exception.OAuth2AuthenticationProcessingExceptio
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -27,7 +26,7 @@ import java.util.Calendar;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
 
-    private UsersDAO usersDAO;
+    private UserDAO usersDAO;
 
     private PasswordEncoder passwordEncoder;
 
@@ -45,15 +44,9 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
             throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
         }
         logger.info("Processing User: "+ oAuth2UserInfo.getEmail());
-        boolean userExists = usersDAO.find(oAuth2UserInfo.getEmail());
-        Users user;
-        if(userExists){
-//            user = userRepository.findByEmail(oAuth2UserInfo.getEmail());
-//            if(!user.getProvider().equals(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
-//                throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
-//                        user.getProvider() + " account. Please use your " + user.getProvider() +
-//                        " account to login.");
-//            }
+        Users user = usersDAO.findByEmail(oAuth2UserInfo.getEmail());
+
+        if(user!=null){ // user exists
             user = updateExistingUser(oAuth2UserInfo);
         } else{
             logger.info("Registering new social user: ");
@@ -76,12 +69,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setPassword(passwordEncoder.encode(oAuth2UserInfo.getName()));
         logger.info("User :"+ user.getEmail() +  "registered");
         user.setImageUrl(oAuth2UserInfo.getImageUrl());
-        return usersDAO.registerUser(user);
+       // return usersDAO.registerUser(user);
+        return null;
     }
 
     private Users updateExistingUser(OAuth2UserInfo oAuth2UserInfo) {
        // existingUser.setFullName(oAuth2UserInfo.getName());
        // existingUser.setImageUrl(oAuth2UserInfo.getImageUrl());
-        return usersDAO.updateSocialUser(oAuth2UserInfo.getEmail());
+       // return usersDAO.updateSocialUser(oAuth2UserInfo.getEmail());
+        return null;
     }
 }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Welcome to Addis cakes</title>
+	<style>
+		html, body {
+			display: block;
+			justify-content: center;
+			align-content: center;
+			align-items: center;
+			font-family: Roboto, Arial, sans-serif;
+			font-size: 15px;
+		}
+		form {
+			border: 5px solid #f1f1f1;
+		}
+		input[type=text], input[type=password] {
+			width: 100%;
+			padding: 16px 8px;
+			margin: 8px 0;
+			display: inline-block;
+			border: 1px solid #ccc;
+			box-sizing: border-box;
+		}
+		button {
+			background-color: #7627bf;
+			color: white;
+			padding: 14px 0;
+			margin: 10px 0;
+			border: none;
+			cursor: grabbing;
+			width: 30%;
+		}
+		h1 {
+			text-align:center;
+			fone-size:18;
+		}
+		button:hover {
+			opacity: 0.8;
+		}
+		#link {
+			background-color: #7627bf;
+			color: white;
+			padding: 1em 1.5em;
+			/*text-decoration: none;*/
+			/*text-transform: uppercase;*/
+		}
+		
+		#link:hover {
+			opacity: 0.8;
+		}
+    .txt-addis-cakes2 {
+        color: #13668e;
+    }
+		
+		/* Change styles for span on extra small screens */
+		@media screen and (max-width: 300px) {
+			span.psw {
+				display: block;
+				float: none;
+			}
+		}
+	</style>
+	<link rel="icon"  href="../static/images/favicon.ico" />
+</head>
+<body>
+
+<img src="../static/images/addis-cakes-logo.png" width="150" height="150" th:src="@{images/addis-cakes-logo.jpg}"/>
+<div style="align-content: center">
+	<p> Welcome to Addis cakes <strong> <span th:text="${user.getFullName()}"></span>.</strong></p>
+	<p> First, verify your account by clicking the link:
+		<br/>
+		<a th:href="@{'http://localhost:8090/addis-cakes/v1/confirm-account?token=' + ${token}}">Activate account</a>
+		<br/>
+		Then, Login to your account with the <span class="txt-addis-cakes2"> <strong> Addis cakes PASTRY </strong> </span> APP with the credentials below: <br/>
+		If you have a question or would like to share your feedback, please contact us. <br/>
+		Enjoy your experience at Addis cakes.
+	</p>
+	<br/>
+	<strong> Email: </strong> <p th:text="${email}"></p>
+	<strong> Password: </strong> <p th:text="${pass}"></p>
+	<br/>
+	<span class="txt-addis-cakes2">Thank you for choosing Addis cakes! <br/>
+		The Addis Cakes Team.</span>
+</div>
+<br/>
+
+
+</body>
+</html>

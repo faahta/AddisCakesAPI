@@ -1,7 +1,7 @@
 package et.addis.home_cakes.security;
 
-import et.addis.home_cakes.orders.dao.UsersDAO;
-import et.addis.home_cakes.orders.model.Users;
+import et.addis.home_cakes.authentication.repository.UserDAO;
+import et.addis.home_cakes.pastries.model.Users;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +11,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
 
 /**
@@ -21,9 +25,9 @@ import java.util.UUID;
 public class TokenProvider {
     @Autowired
     private Environment env;
-    private static final Logger logger = LoggerFactory.getLogger(TokenProvider.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TokenProvider.class);
 
-    private UsersDAO usersDAO;
+    private UserDAO userDAO;
 
     public TokenProvider() {
 
@@ -34,20 +38,23 @@ public class TokenProvider {
         this.appProperties = appProperties;
     }*/
 
-    public String createToken(Authentication authentication) {
-
+    public String createToken(Authentication authentication) throws ParseException {
+        String pfn = "[TokenProvider::createToken]";
+        LOG.info(pfn + " START");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        logger.info("User principal: "+ auth.getPrincipal().toString());
-        logger.info("auth name: "+ auth.getName());
+        LOG.info("User principal: "+ auth.getPrincipal().toString());
+        LOG.info("auth name: "+ auth.getName());
         //UserPrincipal userPrincipal = (UserPrincipal) auth.getPrincipal();
 
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + this.env.getProperty("app.auth.jwtExpirationMs"));
-
+        DateFormat df = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+        Long expiryDate = df.parse(now.toString()).getTime() + Long.parseLong(this.env.getProperty("app.auth.jwtExpirationMs"));
+       // Date expiryDate = new Date(now.getTime() + this.env.getProperty("app.auth.jwtExpirationMs"));
+        LOG.info(pfn + " END");
         return Jwts.builder()
                 .setSubject(auth.getName())
                 .setIssuedAt(new Date())
-                .setExpiration(expiryDate)
+                .setExpiration(new Date(expiryDate))
                 .signWith(SignatureAlgorithm.HS512, this.env.getProperty("app.auth.tokenSecret"))
                 .compact();
     }
@@ -66,7 +73,7 @@ public class TokenProvider {
                 .setSigningKey(this.env.getProperty("app.auth.tokenSecret"))
                 .parseClaimsJws(token)
                 .getBody();
-        Users user = usersDAO.findByEmail(claims.getSubject());
+        Users user = userDAO.findByEmail(claims.getSubject());
         return user;
     }
     public boolean validateToken(String authToken) {
@@ -74,13 +81,13 @@ public class TokenProvider {
             Jwts.parser().setSigningKey(this.env.getProperty("app.auth.tokenSecret")).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException ex) {
-            logger.error("Invalid JWT signature");
+            LOG.error("Invalid JWT signature");
         } catch (MalformedJwtException ex) {
-            logger.error("Invalid JWT token");
+            LOG.error("Invalid JWT token");
         }  catch (UnsupportedJwtException ex) {
-            logger.error("Unsupported JWT token");
+            LOG.error("Unsupported JWT token");
         } catch (IllegalArgumentException ex) {
-            logger.error("JWT claims string is empty.");
+            LOG.error("JWT claims string is empty.");
         }
         return false;
     }

@@ -1,7 +1,7 @@
 package et.addis.home_cakes.security;
 
-import et.addis.home_cakes.orders.dao.UsersDAO;
-import et.addis.home_cakes.orders.model.Users;
+import et.addis.home_cakes.authentication.repository.UserDAO;
+import et.addis.home_cakes.pastries.model.Users;
 import et.addis.home_cakes.util.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,12 +19,13 @@ import java.util.UUID;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private UsersDAO usersDAO;
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final Users user = usersDAO.findByEmail(username);
+        final Users user = userDAO.findByEmail(username);
         if(user==null){
             throw new UsernameNotFoundException("User " + username + " not found");
         }
@@ -34,7 +35,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Transactional
     public UserDetails loadUserById(UUID id) {
-        Users user = usersDAO.findById(id).orElseThrow(
+        Users user = userDAO.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User", "id", id)
         );
 
